@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class GameDAOMYSQL implements GameDAO {
     public void createGame(Game game) {
-        
+
     }
 
     public Collection<Game> readAllGames() {

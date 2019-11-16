@@ -1,4 +1,4 @@
-package services.imp;
+package services.impl;
 
 import dao.GameDAO;
 import gamestore.exceptions.DateIsTooLate;

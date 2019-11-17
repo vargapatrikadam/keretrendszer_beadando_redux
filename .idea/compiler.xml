@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="core" />
         <module name="controller" />
-        <module name="service" />
-        <module name="web" />
         <module name="dao" />
+        <module name="web" />
+        <module name="service" />
       </profile>
     </annotationProcessing>
   </component>

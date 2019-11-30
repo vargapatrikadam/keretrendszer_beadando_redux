@@ -14,6 +14,7 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 @RestController
 public class GameStoreController {
@@ -29,16 +30,26 @@ public class GameStoreController {
         return String.valueOf(service.getAllGames().size());
     }
 
-    @RequestMapping(value = "/getgames", method = RequestMethod.GET)
+    @RequestMapping(value = "/games", method = RequestMethod.GET)
     @ResponseBody
     public Collection<Game> getAllGames() throws DateIsTooLate {
         return service.getAllGames();
     }
 
-    @RequestMapping(value = "/addnewgame", method = RequestMethod.POST)
+    @RequestMapping(value = "/games", method = RequestMethod.POST)
     @ResponseBody
     public Game addNewGame(@RequestBody Game game) throws DateIsTooLate, NoMatchingId {
         service.addGame(game);
         return service.getGame(game.getId());
     }
+
+    @RequestMapping(value = "/games/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Game updateGame(@PathVariable UUID id, @RequestBody Game game) throws DateIsTooLate, NoMatchingId {
+        game.setId(id);
+        service.updateGame(id, game);
+        return game;
+    }
+
+
 }

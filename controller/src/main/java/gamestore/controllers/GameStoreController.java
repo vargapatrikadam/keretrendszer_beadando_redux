@@ -167,7 +167,7 @@ public class GameStoreController {
         return result;
     }
 
-    @RequestMapping(value = "/gamesByPlatforms/")
+    @RequestMapping(value = "/gamesByPlatforms/", method = RequestMethod.GET)
     @ResponseBody
     public Collection<Game> getGamesByPlatforms(
             @RequestParam(required = false) String[] platform
@@ -185,6 +185,21 @@ public class GameStoreController {
                 }
             }
 
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/notReleasedGames", method = RequestMethod.GET)
+    @ResponseBody
+    public Collection<Game> getNotReleasedGames(){
+        Collection<Game> games = service.getAllGames();
+        Collection<Game> result = new ArrayList<>();
+
+        for (Game g: games) {
+            if(g.getRelease_date().isAfter(LocalDate.now())) {
+                result.add(g);
+            }
         }
 
         return result;

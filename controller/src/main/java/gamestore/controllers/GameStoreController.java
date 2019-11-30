@@ -59,6 +59,23 @@ public class GameStoreController {
         return "Delete successful!";
     }
 
+    @RequestMapping(value = "/games/", method = RequestMethod.GET)
+    @ResponseBody
+    public Collection<Game> getGameByRating(@RequestParam String rating){
+        Collection<Game> games = service.getAllGames();
+        Collection<Game> result = new ArrayList<>();
+
+        for (Game g:
+             games) {
+            if(g.getRating().equals(Rating.valueOf(rating))){
+                result.add(g);
+            }
+        }
+
+        return result;
+
+    }
+
     @ExceptionHandler(NoMatchingId.class)
     @ResponseBody
     public String noMatchingIdHandler(Exception ex){

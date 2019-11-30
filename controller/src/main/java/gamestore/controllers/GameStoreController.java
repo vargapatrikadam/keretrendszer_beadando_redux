@@ -59,6 +59,10 @@ public class GameStoreController {
         return "Delete successful!"
     }
 
-    
+    @ExceptionHandler(NoMatchingId.class)
+    @ResponseBody
+    public String noMatchingIdHandler(Exception ex){
+        return "No matching id found in the database: " + ex.getMessage();
+    }
 
 }

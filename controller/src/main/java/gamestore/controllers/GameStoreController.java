@@ -139,6 +139,20 @@ public class GameStoreController {
 
     }
 
+    @RequestMapping(value = "/deleteGamesFromCategory/{category}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteAllGamesFromCategory(@PathVariable String category) throws NoMatchingId {
+        Collection<Game> games = service.getAllGames();
+        for (Game g:
+             games) {
+            if(g.getCategories().contains(Category.valueOf(category))){
+                service.deleteGame(g);
+            }
+        }
+
+        return "Delete successful!";
+    }
+
     @ExceptionHandler(FilterIsMissingException.class)
     @ResponseBody
     public String noFilterExceptionHandler(Exception ex){

@@ -84,15 +84,22 @@ public class GameDAOJSON implements GameDAO {
                 return g;
             }
         }
-        throw new NoMatchingId();
+        throw new NoMatchingId(id.toString());
     }
 
     public void deleteGame(Game game) throws NoMatchingId {
         Collection<Game> szereplok = readAllGames();
+        Collection<Game> result = new ArrayList<Game>();
         try {
             Game deleteThis = readGame(game.getId());
-            szereplok.remove(deleteThis);
-            mapper.writeValue(jsonFile, szereplok);
+
+            for(Game sz : szereplok){
+                if(!(sz.getId().equals(deleteThis.getId()))){
+                    result.add(sz);
+                }
+            }
+
+            mapper.writeValue(jsonFile, result);
         } catch (NoMatchingId noMatchingId) {
             throw noMatchingId;
         } catch (IOException e) {
@@ -100,9 +107,8 @@ public class GameDAOJSON implements GameDAO {
         }
     }
 
-    public void updateGame(Game game) throws NoMatchingId {
-        Game deleteThis = new Game();
-        deleteThis.setId(game.getId());
+    public void updateGame(UUID id, Game game) throws NoMatchingId {
+        Game deleteThis = readGame(id);
         deleteGame(deleteThis);
         createGame(game);
     }

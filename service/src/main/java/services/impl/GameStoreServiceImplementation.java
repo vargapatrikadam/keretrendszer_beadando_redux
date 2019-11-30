@@ -28,8 +28,8 @@ public class GameStoreServiceImplementation implements GameStoreService {
         this.dao.createGame(game);
     }
 
-    public void updateGame(Game game) throws NoMatchingId, DateIsTooLate {
-        this.dao.updateGame(game);
+    public void updateGame(UUID id, Game game) throws NoMatchingId, DateIsTooLate {
+        this.dao.updateGame(id, game);
     }
 
     public void deleteGame(Game game) throws NoMatchingId {

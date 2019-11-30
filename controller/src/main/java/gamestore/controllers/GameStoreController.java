@@ -52,4 +52,13 @@ public class GameStoreController {
     }
 
 
+    @RequestMapping(value = "/games/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String deleteGame(@PathVariable UUID id) throws NoMatchingId {
+        service.deleteGame(id);
+        return "Delete successful!"
+    }
+
+    
+
 }

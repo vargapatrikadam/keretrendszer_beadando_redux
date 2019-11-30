@@ -33,7 +33,7 @@ public class GameStoreController {
 
     @RequestMapping(value = "/games", method = RequestMethod.GET)
     @ResponseBody
-    public Collection<Game> getAllGames() throws DateIsTooLate {
+    public Collection<Game> getAllGames() {
         return service.getAllGames();
     }
 

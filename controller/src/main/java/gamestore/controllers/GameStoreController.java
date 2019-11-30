@@ -67,7 +67,7 @@ public class GameStoreController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String platform) throws FilterIsMissingException {
         if (rating == null && category == null && platform == null)
-            throw new FilterIsMissingException();
+            throw new FilterIsMissingException("You have to specify atleast one filter!");
 
         Collection<Game> games = service.getAllGames();
         Collection<Game> result = new ArrayList<>();
@@ -137,6 +137,12 @@ public class GameStoreController {
 
         return result;
 
+    }
+
+    @ExceptionHandler(FilterIsMissingException.class)
+    @ResponseBody
+    public String noFilterExceptionHandler(Exception ex){
+        return ex.getMessage();
     }
 
     @ExceptionHandler(NoMatchingId.class)

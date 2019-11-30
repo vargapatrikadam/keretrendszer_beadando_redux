@@ -56,7 +56,7 @@ public class GameStoreController {
     @ResponseBody
     public String deleteGame(@PathVariable UUID id) throws NoMatchingId {
         service.deleteGame(id);
-        return "Delete successful!"
+        return "Delete successful!";
     }
 
     @ExceptionHandler(NoMatchingId.class)

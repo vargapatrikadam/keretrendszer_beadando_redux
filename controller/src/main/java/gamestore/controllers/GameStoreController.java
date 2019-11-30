@@ -1,5 +1,6 @@
 package gamestore.controllers;
 
+import gamestore.controllers.exceptions.FilterIsMissingException;
 import gamestore.exceptions.DateIsTooLate;
 import gamestore.exceptions.NoMatchingId;
 import gamestore.models.Category;
@@ -61,14 +62,76 @@ public class GameStoreController {
 
     @RequestMapping(value = "/games/", method = RequestMethod.GET)
     @ResponseBody
-    public Collection<Game> getGameByRating(@RequestParam String rating){
+    public Collection<Game> getGamesByFilter(
+            @RequestParam(required = false) String rating,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String platform) throws FilterIsMissingException {
+        if (rating == null && category == null && platform == null)
+            throw new FilterIsMissingException();
+
         Collection<Game> games = service.getAllGames();
         Collection<Game> result = new ArrayList<>();
 
-        for (Game g:
-             games) {
-            if(g.getRating().equals(Rating.valueOf(rating))){
-                result.add(g);
+        for (Game g: games) {
+            if(rating != null && category != null && platform != null){
+                if(g.getRating().equals(Rating.valueOf(rating)) &&
+                   g.getCategories().contains(Category.valueOf(category)) &&
+                   g.getPlatforms().contains(Platform.valueOf(platform))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(rating != null && category != null){
+                if(g.getRating().equals(Rating.valueOf(rating)) &&
+                   g.getCategories().contains(Category.valueOf(category))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(rating != null && platform != null){
+                if(g.getRating().equals(Rating.valueOf(rating)) &&
+                   g.getPlatforms().contains(Platform.valueOf(platform))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(category != null && platform != null){
+                if(g.getPlatforms().equals(Platform.valueOf(platform)) &&
+                   g.getCategories().contains(Category.valueOf(category))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(category != null){
+                if(g.getCategories().contains(Category.valueOf(category))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(rating != null){
+                if(g.getRating().equals(Rating.valueOf(rating))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
+            }
+
+            if(platform != null){
+                if(g.getPlatforms().equals(Platform.valueOf(platform))){
+                    result.add(g);
+                    continue;
+                }
+                continue;
             }
         }
 

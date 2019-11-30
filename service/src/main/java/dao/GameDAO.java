@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.UUID;
 
 public interface GameDAO {
-    public void createGame(Game game);
-    public Collection<Game> readAllGames();
-    public Game readGame(UUID id) throws NoMatchingId;
-    public void updateGame(UUID id, Game game) throws NoMatchingId;
-    public void deleteGame(Game game) throws NoMatchingId;
+    void createGame(Game game);
+    Collection<Game> readAllGames();
+    Game readGame(UUID id) throws NoMatchingId;
+    void updateGame(UUID id, Game game) throws NoMatchingId;
+    void deleteGame(Game game) throws NoMatchingId;
 }

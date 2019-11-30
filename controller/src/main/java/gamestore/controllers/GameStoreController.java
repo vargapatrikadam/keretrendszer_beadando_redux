@@ -167,6 +167,29 @@ public class GameStoreController {
         return result;
     }
 
+    @RequestMapping(value = "/gamesByPlatforms/")
+    @ResponseBody
+    public Collection<Game> getGamesByPlatforms(
+            @RequestParam(required = false) String[] platform
+    ){
+        Collection<Game> games = service.getAllGames();
+        Collection<Game> result = new ArrayList<>();
+
+        for (Game g:
+             games) {
+            for (String p:
+                 platform) {
+                if(g.getPlatforms() != null && g.getPlatforms().contains(Platform.valueOf(p))){
+                    result.add(g);
+                    break;
+                }
+            }
+
+        }
+
+        return result;
+    }
+
     @ExceptionHandler(FilterIsMissingException.class)
     @ResponseBody
     public String noFilterExceptionHandler(Exception ex){

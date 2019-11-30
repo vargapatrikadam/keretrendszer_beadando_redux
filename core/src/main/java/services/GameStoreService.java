@@ -8,10 +8,10 @@ import java.util.Collection;
 import java.util.UUID;
 
 public interface GameStoreService {
-    public Collection<Game> getAllGames();
-    public Game getGame(UUID id) throws NoMatchingId;
-    public void addGame(Game game) throws DateIsTooLate;
-    public void updateGame(UUID id, Game game) throws NoMatchingId, DateIsTooLate;
-    public void deleteGame(Game game) throws NoMatchingId;
-    public void deleteGame(UUID id) throws NoMatchingId;
+    Collection<Game> getAllGames();
+    Game getGame(UUID id) throws NoMatchingId;
+    void addGame(Game game) throws DateIsTooLate;
+    void updateGame(UUID id, Game game) throws NoMatchingId, DateIsTooLate;
+    void deleteGame(Game game) throws NoMatchingId;
+    void deleteGame(UUID id) throws NoMatchingId;
 }

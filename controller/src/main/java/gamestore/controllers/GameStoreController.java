@@ -8,10 +8,10 @@ import gamestore.models.Game;
 import gamestore.models.Platform;
 import gamestore.models.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import services.GameStoreService;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -151,6 +151,20 @@ public class GameStoreController {
         }
 
         return "Delete successful!";
+    }
+
+    @RequestMapping(value = "/games/{date}", method = RequestMethod.GET)
+    @ResponseBody
+    public Collection<Game> getGamesByDate(@PathVariable @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) LocalDate date){
+        Collection<Game> games = service.getAllGames();
+        Collection<Game> result = new ArrayList<>();
+        for (Game g:
+             games) {
+            if(g.getRelease_date().isEqual(date)){
+                result.add(g);
+            }
+        }
+        return result;
     }
 
     @ExceptionHandler(FilterIsMissingException.class)
